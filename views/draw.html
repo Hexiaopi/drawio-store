@@ -1,0 +1,56 @@
+{{ define "content" }}
+<div class="container">
+
+  <div class="row">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#drawModal">
+      创建
+    </button>
+  </div>
+  <br />
+
+  <div class="modal fade" id="drawModal" tabindex="-1" role="dialog" aria-labelledby="drawModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">新建设计图</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="input-group">
+              <span class="input-group-addon">
+                <input type="text" name="image" id="inputDraw" class="form-control" placeholder="文件名">
+              </span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="createImage()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    {{ range . }}
+    <div class="col-sm-4 mb-3 mb-sm-0">
+      <div class="card border-dark">
+        <h5 class="card-header bg-transparent">{{ .Alt }}</h5>
+        <img src="{{ .Data }}" alt="{{ .Alt }}" onclick='DiagramEditor.editElement(this);' class="img-fluid">
+        <div class="card-body">
+
+        </div>
+        <div class="card-footer bg-transparent">
+          <span class="badge rounded-pill text-bg-info">{{ .Size | fbyte }}</span>
+          <span class="badge rounded-pill text-bg-secondary">{{ .CreatedAt | fdate }}</span>
+          <button class="btn btn-outline-danger btn-sm pull-right" onclick='deleteImage("{{ .Alt }}")'>删除</button>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+</div>
+{{ end }}
